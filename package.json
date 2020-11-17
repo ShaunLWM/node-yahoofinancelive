@@ -1,0 +1,34 @@
+{
+	"name": "node-yahoofinancelive",
+	"version": "0.0.1-alpha.7",
+	"description": "A simple Yahoo Finance socket client",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"repository": "git@github.com:ShaunLWM/node-yahoofinancelive.git",
+	"author": "ShaunLWM",
+	"license": "MIT",
+	"dependencies": {
+		"protobufjs": "^6.10.2",
+		"ws": "^7.4.0"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsc",
+		"prepublish": "npm run copy && tsc",
+		"copy": "RMDIR /Q/S dist && mkdir dist && @powershell copy './src/yahoo.proto' './dist'"
+	},
+	"devDependencies": {
+		"@types/ws": "^7.4.0",
+		"ts-proto": "^1.38.1"
+	},
+	"keywords": [
+		"yahoofinance",
+		"yahoo finance",
+		"stocks",
+		"ticker",
+		"tickers",
+		"stocks price"
+	]
+}
