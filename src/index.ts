@@ -17,9 +17,11 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 		return this._tickers;
 	}
 
-	addTicker(ticker: string): void {
+	addTicker(ticker: string | Array<string>, clear = false): void {
+		if (clear) this._tickers = [];
 		let force = this._tickers.length < 1;
-		this._tickers.push(ticker);
+		if (Array.isArray(ticker)) this._tickers.push(...ticker);
+		else this._tickers.push(ticker);
 		this.refresh(force);
 	}
 
@@ -48,11 +50,10 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 			throw new Error("Unable to load proto file. Please contact developer");
 		}
 
-		if (!this._ws || (this._ws && this._ws.readyState !== WebSocket.OPEN)) {
+		if (!this._ws || (this._ws && this._ws.readyState !== WebSocket.OPEN))
 			this._ws = new WebSocket("wss://streamer.finance.yahoo.com", {
 				origin: "https://finance.yahoo.com",
 			});
-		}
 
 		this._ws.on("close", () => this.emit("disconnected"));
 		this._ws.on("error", (error) => this.emit("error", error));
