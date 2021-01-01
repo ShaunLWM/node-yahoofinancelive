@@ -1,6 +1,6 @@
 {
 	"name": "node-yahoofinancelive",
-	"version": "0.0.1-alpha.7",
+	"version": "0.0.1-alpha.8",
 	"description": "A simple Yahoo Finance socket client",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
