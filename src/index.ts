@@ -25,8 +25,9 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 		this.refresh(force);
 	}
 
-	removeTicker(ticker: string): void {
-		if (this._tickers.indexOf(ticker) < 0) {
+	removeTicker(ticker: string = ""): void {
+		if (ticker.length < 1) this._tickers = [];
+		else if (this._tickers.indexOf(ticker) < 0) {
 			this._tickers.splice(this._tickers.indexOf(ticker), 1);
 			this.refresh();
 		}
@@ -84,6 +85,9 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 
 	close(): void {
 		if (!this._ws) return;
-		if (this.active()) this._ws.close();
+		if (this.active()) {
+			this._ws.close();
+			this._tickers = [];
+		}
 	}
 }
