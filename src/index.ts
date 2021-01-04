@@ -27,15 +27,13 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 
 	removeTicker(ticker: string = ""): void {
 		if (ticker.length < 1) this._tickers = [];
-		else if (this._tickers.indexOf(ticker) < 0) {
-			this._tickers.splice(this._tickers.indexOf(ticker), 1);
-			this.refresh();
-		}
+		if (this._tickers.indexOf(ticker) > -1) this._tickers.splice(this._tickers.indexOf(ticker), 1);
+		this.refresh();
 	}
 
 	async refresh(force = false): Promise<void> {
-		if (force) return await this.connect();
-		else if (this.active())
+		if (force) await this.connect();
+		if (this.isActive())
 			this._ws.send(
 				JSON.stringify({
 					subscribe: this._tickers,
@@ -51,7 +49,7 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 			throw new Error("Unable to load proto file. Please contact developer");
 		}
 
-		if (!this._ws || (this._ws && this._ws.readyState !== WebSocket.OPEN))
+		if (!this._ws || !this.isActive())
 			this._ws = new WebSocket("wss://streamer.finance.yahoo.com", {
 				origin: "https://finance.yahoo.com",
 			});
@@ -79,13 +77,13 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 		});
 	}
 
-	active(): boolean {
+	isActive(): boolean {
 		return this._ws && this._ws.readyState === WebSocket.OPEN;
 	}
 
 	close(): void {
 		if (!this._ws) return;
-		if (this.active()) {
+		if (this.isActive()) {
 			this._ws.close();
 			this._tickers = [];
 		}
