@@ -22,6 +22,7 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 		let force = this._tickers.length < 1;
 		if (Array.isArray(ticker)) this._tickers.push(...ticker);
 		else this._tickers.push(ticker);
+		this._tickers = Array.from(new Set(this._tickers));
 		this.refresh(force);
 	}
 
