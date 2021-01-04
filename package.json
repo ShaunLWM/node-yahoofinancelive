@@ -1,11 +1,12 @@
 {
 	"name": "node-yahoofinancelive",
-	"version": "0.0.1-alpha.10",
+	"version": "0.0.1-alpha.11",
 	"description": "A simple Yahoo Finance socket client",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"repository": "git@github.com:ShaunLWM/node-yahoofinancelive.git",
 	"author": "ShaunLWM",
+	"homepage": "https://github.com/ShaunLWM/node-yahoofinancelive",
 	"license": "MIT",
 	"dependencies": {
 		"protobufjs": "^6.10.2",
