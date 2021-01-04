@@ -57,7 +57,8 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 
 		this._ws.on("close", () => this.emit("disconnected"));
 		this._ws.on("error", (error) => this.emit("error", error));
-		this._ws.on("open", () => {
+		this._ws.on("open", async () => {
+			await new Promise((r) => setTimeout(r, 3000));
 			this.emit("connected");
 			this._ws.send(
 				JSON.stringify({
