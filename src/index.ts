@@ -49,10 +49,10 @@ export default class YahooFinance<IYahooFinance> extends EventEmitter {
 			throw new Error("Unable to load proto file. Please contact developer");
 		}
 
-		if (!this._ws || !this.isActive())
-			this._ws = new WebSocket("wss://streamer.finance.yahoo.com", {
-				origin: "https://finance.yahoo.com",
-			});
+		if (this.isActive()) return;
+		this._ws = new WebSocket("wss://streamer.finance.yahoo.com", {
+			origin: "https://finance.yahoo.com",
+		});
 
 		this._ws.on("close", () => this.emit("disconnected"));
 		this._ws.on("error", (error) => this.emit("error", error));
